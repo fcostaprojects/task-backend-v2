@@ -1,0 +1,29 @@
+version: '3.9'  # Versão compatível com o Compose V2
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres_container
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: tasks
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      mynetwork:
+        ipv4_address: 172.30.0.10  # IP fixo atribuído ao container
+    ports:
+      - "5433:5432"
+
+networks:
+  mynetwork:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.30.0.0/16  # Sub-rede personalizada
+          gateway: 172.30.0.1  # informar este ip de conexao de banco
+
+volumes:
+  pgdata:
+    external: false
