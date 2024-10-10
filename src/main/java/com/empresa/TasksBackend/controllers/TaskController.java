@@ -13,7 +13,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -29,7 +28,7 @@ public class TaskController {
     private TaskRepository taskRepository;
 
     @PostMapping("/tasks")
-    public ResponseEntity<Object> save(@RequestBody @Valid TaskRecordDto taskRecordDto, BindingResult bindingResult) {
+    public ResponseEntity<Object> saveTask(@RequestBody @Valid TaskRecordDto taskRecordDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             // Coleta mensagens de erro
             List<String> listaErros = bindingResult.getAllErrors().stream()
@@ -61,7 +60,7 @@ public class TaskController {
     public ResponseEntity<Object> getOneTask(@PathVariable(value = "id")UUID id) {
         Optional<Task> task = taskRepository.findById(id);
         if (task.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(task.get());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(id);
         }
         Link link = linkTo(methodOn(TaskController.class).getAllTasks()).withSelfRel();
         task.get().add(link);
@@ -72,7 +71,7 @@ public class TaskController {
     public ResponseEntity<Object> deleteTask(@PathVariable(value = "id")UUID id) {
         Optional<Task> task = taskRepository.findById(id);
         if (task.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(task.get());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(id);
         }
         taskRepository.delete(task.get());
         return ResponseEntity.status(HttpStatus.OK).body("deleted");

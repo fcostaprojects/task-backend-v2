@@ -2,7 +2,6 @@ package com.empresa.TasksBackend.controllers;
 
 import com.empresa.TasksBackend.dtos.TaskRecordDto;
 import com.empresa.TasksBackend.repositories.TaskRepository;
-import org.junit.Before;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,7 +9,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
@@ -47,7 +45,7 @@ public class TaskControllerTest {
 
         BindingResult bindingResult = mock(BindingResult.class);
         when(bindingResult.hasErrors()).thenReturn(true);
-        ResponseEntity<Object> response = taskController.save(taskRecordDto, bindingResult);
+        ResponseEntity<Object> response = taskController.saveTask(taskRecordDto, bindingResult);
         List erros = new ArrayList();
         erros.add("O campo detail não foi preenchido");
         List<ObjectError> validacoes = bindingResult.getAllErrors();
@@ -63,7 +61,7 @@ public class TaskControllerTest {
 
         BindingResult bindingResult = mock(BindingResult.class);
         when(bindingResult.hasErrors()).thenReturn(true);
-        ResponseEntity<Object> response = taskController.save(taskRecordDto, bindingResult);
+        ResponseEntity<Object> response = taskController.saveTask(taskRecordDto, bindingResult);
         List erros = new ArrayList();
         erros.add("O campo data não foi preenchido");
         List<ObjectError> validacoes = bindingResult.getAllErrors();
@@ -78,7 +76,7 @@ public class TaskControllerTest {
         TaskRecordDto taskRecordDto = new TaskRecordDto(detail, localDate);
         BindingResult bindingResult = mock(BindingResult.class);
         when(bindingResult.hasErrors()).thenReturn(true);
-        ResponseEntity<Object> response = taskController.save(taskRecordDto, bindingResult);
+        ResponseEntity<Object> response = taskController.saveTask(taskRecordDto, bindingResult);
         List erros = new ArrayList();
         erros.add("O campo data não foi preenchido");
         List<ObjectError> validacoes = bindingResult.getAllErrors();
@@ -92,7 +90,7 @@ public class TaskControllerTest {
         TaskRecordDto taskRecordDto = new TaskRecordDto(detail, localDate);
         BindingResult bindingResult = mock(BindingResult.class);
         when(bindingResult.hasErrors()).thenReturn(false);
-        ResponseEntity<Object> response = taskController.save(taskRecordDto, bindingResult);
+        ResponseEntity<Object> response = taskController.saveTask(taskRecordDto, bindingResult);
         Assertions.assertEquals(HttpStatus.CREATED, response.getStatusCode());
     }
 
