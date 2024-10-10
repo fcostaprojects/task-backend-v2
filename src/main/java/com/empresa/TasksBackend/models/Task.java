@@ -26,7 +26,7 @@ public class Task extends RepresentationModel<Task> implements Serializable {
 
     private String detail;
 
-    private Date date;
+    private LocalDate date;
 
     public Task() {}
 
@@ -46,11 +46,11 @@ public class Task extends RepresentationModel<Task> implements Serializable {
         this.detail = detail;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 }

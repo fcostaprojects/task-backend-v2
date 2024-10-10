@@ -11,14 +11,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -30,21 +29,20 @@ public class TaskController {
     private TaskRepository taskRepository;
 
     @PostMapping("/tasks")
-    public ResponseEntity<Object> saveTask(@RequestBody @Valid TaskRecordDto taskRecordDto, BindingResult bindingResult) {
+    public ResponseEntity<Object> save(@RequestBody @Valid TaskRecordDto taskRecordDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            // Obtenha a mensagem de erro do campo específico
-            var listaErros = new ArrayList();
-            for (ObjectError error : bindingResult.getAllErrors()) {
-                String errorMessage = error.getDefaultMessage();
-                listaErros.add(errorMessage);
-            }
+            // Coleta mensagens de erro
+            List<String> listaErros = bindingResult.getAllErrors().stream()
+                    .map(ObjectError::getDefaultMessage)
+                    .collect(Collectors.toList());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(listaErros);
         }
+
         var task = new Task();
         BeanUtils.copyProperties(taskRecordDto, task);
-        return ResponseEntity.status(HttpStatus.CREATED).body(taskRepository.save(task));
+        var saida = taskRepository.save(task);
+        return ResponseEntity.status(HttpStatus.CREATED).body(saida);
     }
-
 
     @GetMapping("/tasks")
     public ResponseEntity<List<Task>> getAllTasks() {
