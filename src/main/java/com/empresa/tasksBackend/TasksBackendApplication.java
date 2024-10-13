@@ -1,4 +1,4 @@
-package com.empresa.TasksBackend;
+package com.empresa.tasksBackend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

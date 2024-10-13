@@ -1,4 +1,4 @@
-package com.empresa.TasksBackend.dtos;
+package com.empresa.tasksBackend.dtos;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;

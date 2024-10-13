@@ -1,7 +1,7 @@
-package com.empresa.TasksBackend.repositories;
+package com.empresa.tasksBackend.repositories;
 
 
-import com.empresa.TasksBackend.models.Task;
+import com.empresa.tasksBackend.models.Task;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

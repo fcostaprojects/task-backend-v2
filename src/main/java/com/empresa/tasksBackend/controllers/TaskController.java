@@ -1,8 +1,8 @@
-package com.empresa.TasksBackend.controllers;
+package com.empresa.tasksBackend.controllers;
 
-import com.empresa.TasksBackend.dtos.TaskRecordDto;
-import com.empresa.TasksBackend.models.Task;
-import com.empresa.TasksBackend.repositories.TaskRepository;
+import com.empresa.tasksBackend.dtos.TaskRecordDto;
+import com.empresa.tasksBackend.models.Task;
+import com.empresa.tasksBackend.repositories.TaskRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

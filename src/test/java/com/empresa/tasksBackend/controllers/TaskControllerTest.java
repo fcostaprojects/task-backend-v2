@@ -1,7 +1,7 @@
-package com.empresa.TasksBackend.controllers;
+package com.empresa.tasksBackend.controllers;
 
-import com.empresa.TasksBackend.dtos.TaskRecordDto;
-import com.empresa.TasksBackend.repositories.TaskRepository;
+import com.empresa.tasksBackend.dtos.TaskRecordDto;
+import com.empresa.tasksBackend.repositories.TaskRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

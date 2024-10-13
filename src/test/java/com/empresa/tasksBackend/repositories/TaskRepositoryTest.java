@@ -1,6 +1,5 @@
-package com.empresa.TasksBackend.repositories;
+package com.empresa.tasksBackend.repositories;
 
-import org.junit.Test;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 
