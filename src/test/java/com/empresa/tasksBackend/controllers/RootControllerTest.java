@@ -1,22 +1,23 @@
 package com.empresa.tasksBackend.controllers;
 
+
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.test.web.servlet.MockMvc;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.hamcrest.Matchers.is;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.ResponseEntity;
 
-@WebMvcTest(RootController.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class RootControllerTest {
 
     @Autowired
-    private MockMvc mockMvc;
+    private TestRestTemplate restTemplate;
 
     @Test
     public void deveRetorarHelloWord() throws Exception {
-        mockMvc.perform(get("/"))
-                .andExpect(content().string(is("Hello World!")));
+        ResponseEntity<String> response = restTemplate.getForEntity("/", String.class);
+        Assertions.assertThat(response.getStatusCodeValue()).isEqualTo(200);
+        Assertions.assertThat(response.getBody()).isEqualTo("Hello World!");
     }
 }
