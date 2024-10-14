@@ -1,6 +1,7 @@
 package com.empresa.tasksBackend.controllers;
 
 import com.empresa.tasksBackend.dtos.TaskRecordDto;
+import com.empresa.tasksBackend.models.Task;
 import com.empresa.tasksBackend.repositories.TaskRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,6 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
@@ -19,7 +21,13 @@ import static org.mockito.Mockito.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 public class TaskControllerTest {
 
@@ -94,9 +102,17 @@ public class TaskControllerTest {
         Assertions.assertEquals(HttpStatus.CREATED, response.getStatusCode());
     }
 
-//
-//    @Test
-//    public void deveSavarTarefaComSucesso() {
-//
-//    }
+
+    @Test
+    public void deveRetornarTodosTasks() throws Exception {
+        LocalDate localDate = LocalDate.now();
+        String detail = "Tarefa";
+        TaskRecordDto taskRecordDto = new TaskRecordDto(detail, localDate);
+        BindingResult bindingResult = mock(BindingResult.class);
+        when(bindingResult.hasErrors()).thenReturn(false);
+        taskController.saveTask(taskRecordDto, bindingResult);
+        ResponseEntity<List<Task>> response = taskController.getAllTasks();
+        Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
 }
