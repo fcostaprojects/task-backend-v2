@@ -10,9 +10,11 @@ import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -31,10 +33,14 @@ public class TaskController {
     public ResponseEntity<Object> saveTask(@RequestBody @Valid TaskRecordDto taskRecordDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             // Coleta mensagens de erro
-            List<String> listaErros = bindingResult.getAllErrors().stream()
-                    .map(ObjectError::getDefaultMessage)
-                    .collect(Collectors.toList());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(listaErros);
+            var listMessagens = new ArrayList<String>();
+            for (ObjectError objectError : bindingResult.getAllErrors()) {
+                listMessagens.add(objectError.getDefaultMessage());
+            }
+//            List<String> listaErros = bindingResult.getAllErrors().stream()
+//                    .map(ObjectError::getDefaultMessage)
+//                    .collect(Collectors.toList());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(listMessagens);
         }
 
         var task = new Task();

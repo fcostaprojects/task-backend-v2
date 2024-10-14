@@ -59,6 +59,23 @@ services:
       mynetwork:
         ipv4_address: 172.30.0.13
 
+  tomcat:
+    image: tomcat:latest
+    container_name: tomcat
+    ports:
+      - "8080:8080"  # Mapeia a porta 8080 do container para a porta 8080 do host
+    volumes:
+      - webapps:/usr/local/tomcat/webapps  # Mapeia a pasta local 'webapps' para o diretório de apps do Tomcat
+      - conf:/usr/local/tomcat/conf  # Pasta para as configurações do Tomcat
+      - logs:/usr/local/tomcat/logs  # Pasta para os logs do Tomcat
+      - temp:/usr/local/tomcat/temp  # Pasta para arquivos temporários
+      - work:/usr/local/tomcat/work  # Pasta para arquivos de trabalho
+    environment:
+      - CATALINA_OPTS=-Xms512M -Xmx1024M  # Exemplo de opções de configuração do Tomcat
+    networks:
+      mynetwork:
+        ipv4_address: 172.30.0.14
+
 networks:
   mynetwork:
     driver: bridge
@@ -75,3 +92,8 @@ volumes:
   postgresql:
   postgresql_data:
   jenkins_home:
+  webapps:
+  conf:
+  logs:
+  temp:
+  work:
