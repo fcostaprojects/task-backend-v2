@@ -6,5 +6,10 @@ pipeline {
                 sh './mvnw clean package -DskipTests=true'
             }
         }
+        stage("Unit tests") {
+            steps {
+                sh './mvnw tests'
+            }
+        }
     }
 }
