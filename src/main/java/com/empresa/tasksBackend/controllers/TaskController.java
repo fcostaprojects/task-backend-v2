@@ -29,6 +29,11 @@ public class TaskController {
     @Autowired
     private TaskRepository taskRepository;
 
+    @GetMapping("/")
+    public String hello() {
+        return "Hello World!";
+    }
+
     @PostMapping("/tasks")
     public ResponseEntity<Object> saveTask(@RequestBody @Valid TaskRecordDto taskRecordDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
